@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Сотрудники</title>
+</head>
+<body>
+<h3>Сотрудники</h3>
+
+<%
+    try {
+        var res = XQuery("for $c in collaborators order by $c/fullname ascending return $c");
+        var rows = ArraySelectAll(res);
+        var count = ArrayCount(rows);
+        var fio = ""; // объявляем ОДИН раз
+
+        for (var i = 0; i < count; i++) {
+            fio = "";
+            if (rows[i].fullname) {
+                fio = String(rows[i].fullname);
+            }
+%>
+
+<%= fio %><br>
+<%
+        }
+    } catch (err) {
+%>
+<div style="color:red">Ошибка: <%= String(err) %></div>
+<%
+    }
+%>
+
+</body>
+</html>
